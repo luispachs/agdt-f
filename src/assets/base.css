@@ -19,3 +19,28 @@ body {
 .hidden{
   display: none;
 }
+.btn{
+    width: clamp(100px,300px,100%);
+    height: clamp(30px,40px,60px);
+    border: none;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px #b8cdec;
+    font-weight: 900;
+    &[type="submit"]{
+        background-color: rgb(168, 233, 168);
+        box-shadow: 1px 1px 2px #88b087;
+    }
+}
+
+.btn:hover{
+    background-color: #77cafa;
+    color: var(--text-primary);
+    transition: background-color 0.3s ease-in-out , color 0.3s ease-in-out;
+    cursor: pointer;
+    font-weight: 900;
+    &[type="submit"]{
+        background-color: rgb(123, 243, 123);
+        box-shadow: 1px 1px 2px #88b087;
+    }
+
+}

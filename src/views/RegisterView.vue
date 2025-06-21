@@ -36,7 +36,7 @@ import PublicNavBar from '@/components/UI/PublicNavBar.vue';
 </script>
 <template>
     <PublicNavBar/>
-    <main>
+    <main class="register">
         <section class="tabs">
             <Tab :handle="changeTab" label="Información de propietario" :isSelected="tabs.tab1" Tkey="0"/>     
             <Tab :handle="changeTab" label="Información de Negocio" :isSelected="tabs.tab2" Tkey="1"/>
@@ -47,12 +47,12 @@ import PublicNavBar from '@/components/UI/PublicNavBar.vue';
     </main>
 </template>
 <style scoped>
-    main{
+    main.register{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 99vh;
+        height: 95vh;
     }
     .tabs{
         display: flex;

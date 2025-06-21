@@ -27,7 +27,6 @@
         }}
     })
 
-    console.log(buttonType,Text,Icon,Disabled,variant)
 </script>
 <template>
     <button v-if="variant=='primary'" :type="buttonType" :disabled="Disabled" class="btn" v-on:click="handle($event)">{{ Text }}</button>

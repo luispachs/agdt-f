@@ -16,8 +16,8 @@ import { ref,useTemplateRef } from 'vue';
                     return {
                         id: plan[0],
                         name: plan[1],
-                        value: plan[2],
-                        frequency: plan[3]
+                        monthly: plan[2],
+                        yearly: plan[3],
                     }
                 })
                 planes.value=result
@@ -34,12 +34,20 @@ import { ref,useTemplateRef } from 'vue';
             for(let plan =0;plan < planesArea.value?.children.length;plan++){
                 let item: HTMLElement = planesArea.value?.children[plan] as HTMLElement;
                 if(item != undefined){
-                    console.log(item);
                     item.classList.remove('selected');
                 }
             }
             input.parentElement?.classList.add('selected');
             
+        }
+
+        function frequencySelected(ev:Event){
+            let target = ev.target as HTMLInputElement;
+            if(target.parentElement!.parentElement!.parentElement?.dataset.index == planesArea.value?.dataset.index){
+              target.classList.toggle('frequency-selected');
+              target.querySelector('input')!.checked =true;
+            }
+
         }
     
 
@@ -52,18 +60,20 @@ import { ref,useTemplateRef } from 'vue';
 
         <TextFiels :name="'businessPhone'" label="Telefono del Negocio" type="phone" placeholder="Telefono del negocio" :required="true" :value="businessPhone"/>
         <section class="planes-area" ref="planes-area">
-            <article  v-for="plan in planes" :key="plan.id" class="plan-card">
+            <article  v-for="plan in planes" :key="plan.id" class="plan-card" :data-index="plan.id">
                 <input type="radio" :value="plan.id" :id="plan.name" name="plan" class="input-plan"/>
                 <section class="plan-header">
                     <h3>{{ plan.name }}</h3>
                 </section>
                 <section class="plan-body">
-                    <p v-if="plan.frequency =='MONTHLY'">
-                        {{ plan.value }} / Mes
-                    </p>
-                    <p v-else>
-                        {{ plan.value }} / año
-                    </p>
+                    <label v-on:click="frequencySelected($event)" :data-index="plan.id">
+                        {{ plan.monthly }} / Mes
+                        <input :value="plan.monthly" type="radio" class="hidden" :name="'select-frequency-'+plan.id"  :title="plan.name+'-'+plan.id"/>
+                    </label>
+                    <label v-on:click="frequencySelected($event)" :data-index="plan.id">
+                        {{ plan.yearly }} / año
+                      <input :value="plan.yearly" type="radio"  class="hidden" :name="'select-frequency-'+plan.id"  :title="plan.name+'-'+plan.id"/>
+                    </label>
                 </section>
                 <section class="card-footer">
                     <button @click.prevent="selectPlan(plan.name)" type="button">Seleccionar</button>
@@ -81,7 +91,6 @@ import { ref,useTemplateRef } from 'vue';
     .planes-area {
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
         justify-content: space-between;
         align-items:center;
         flex-wrap: nowrap;
@@ -102,12 +111,25 @@ import { ref,useTemplateRef } from 'vue';
                 display:none;
                 
             }
-            & > .plan.body{
+            & > .plan-body {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-items: center;
-                font-weight: bold;
+                height:10vh ;
+                width: 90%;
+              & > label {
+                  align-items: center;
+                  font-weight: bold;
+                  margin-top: clamp(1px,2px,2px);
+                  margin-bottom: clamp(1px,2px,2px);
+                  width: 100%;
+                  text-align: center;
+                  cursor: pointer;
+                border-bottom: 1px solid transparent;
+              }
+              & > label:hover{
+                  border-bottom: 1px solid var(--accent-100);
+              }
             }
             & > .card-footer{
                 display: flex;
@@ -122,7 +144,7 @@ import { ref,useTemplateRef } from 'vue';
                     font-weight: bold;
                     color: var(--accent-200);
                     border:none;
-                    cursor: pointr
+                    cursor: pointer
                 }
             }
         }
@@ -131,5 +153,9 @@ import { ref,useTemplateRef } from 'vue';
     .selected {
         box-shadow: 0 0 5px var(--accent-100);
         background-color: var(--bg-100) !important;
+    }
+
+    .frequency-selected {
+      border: 2px solid var(--accent-100);
     }
 </style>

@@ -8,5 +8,6 @@ export type Plan = {
     id?:number;
     name:string;
     value:number;
-    frequency:string
+    monthly:number
+    yearly:number;
 }

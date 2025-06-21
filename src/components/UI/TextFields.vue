@@ -31,6 +31,7 @@ import { ref } from 'vue';
         position: relative;
         justify-content: center;
         align-items: center;
+        box-sizing: border-box;
     }
 
 
