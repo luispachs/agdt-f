@@ -3,8 +3,9 @@ const BASE_PATH = import.meta.env.VITE_APP_API_URL
 async function POST(url:string,data:object|FormData,headers:object={}){
 
   
-    let options = {
+    let options:RequestInit = {
         method:'POST',
+        redirect:'manual',
         headers: {
             'Content-Type': 'application/json',
             ...headers
@@ -28,8 +29,10 @@ async function POST(url:string,data:object|FormData,headers:object={}){
 async function GET(url:string,data:any =null,headers:object={}){
 
     let bodyData:string|FormData|null;
-    let options = {
+    let options:RequestInit = {
         method:'GET',
+        redirect:'manual',
+
         headers: {
             'Content-Type': 'application/json',
             ...headers
@@ -53,8 +56,10 @@ async function GET(url:string,data:any =null,headers:object={}){
 
 async function PUT(url:string,data:any,headers:object={}){
 
-    let options = {
+    let options:RequestInit = {
         method:'PUT',
+        redirect:'manual',
+
         headers: {
             'Content-Type': 'application/json',
             ...headers
@@ -78,7 +83,7 @@ async function PUT(url:string,data:any,headers:object={}){
 
 async function DELETE(url:string,data:any,headers:object={}){
 
-    let options = {
+    let options:RequestInit = {
         method:'DELETE',
         headers: {
             'Content-Type': 'application/json',

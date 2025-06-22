@@ -1,14 +1,15 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import BussinessInfo from '@/components/UI/BusinessInfo.vue'
     import OwnerInfo from '@/components/UI/OwnerInfo.vue'
     import TabPaginator from '@/components/UI/TabPaginator.vue';
     import Alert from '@/components/UI/Alert.vue';
     import { useRouter } from 'vue-router';
-    import {FormParse} from '../../utils/FormParse';
+    import {FormParse} from '@/utils/FormParse';
     import { RegisterFormValidator } from '@/utils/Validators/RegisterFormValidator';
     import {POST} from '@/utils/HTTP';
     import { ref } from 'vue';
-import router from '@/router';
+    import {useRoute} from "vue-router";
+    const router = useRouter();
     const props= defineProps({
         tabs: {
             type: Object,
@@ -38,11 +39,11 @@ import router from '@/router';
            })
         }
 
-        POST('auth/register',body)
+        POST('auth/register',body,)
             .then(async (resp)=>{
                 let d = await resp.json();
-                if(resp.status ==200){
-                    router.push('/')
+                if(resp.status == 200){
+                  router.push('/login')
                 }else{
                     errors.value= [d.data]
                 }
