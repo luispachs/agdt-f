@@ -7,9 +7,10 @@ import {LoginFormValidator} from "@/utils/Validators/LoginFormValidator.ts";
 import Alert from "@/components/UI/Alert.vue";
 import {ref} from "vue";
 import {POST} from "@/utils/HTTP"
+import { useRouter } from "vue-router";
 
 
-
+let router = useRouter();
 let errors = ref<string[]>([]);
 let hidden = ref(true);
 
@@ -23,7 +24,15 @@ function submitHandle(event:Event){
       }
       POST('auth/login',data).then(
           async (resp)=>{
-            console.log(await resp.json());
+              let json = await resp.json();
+              
+
+              if(resp.status == 200){
+                localStorage.setItem(import.meta.env.VITE_SESSION_TOKEN,json.token)
+                await router.push(`/dashboard`);
+                return;
+              }
+              errors.value = [json.data]
           }
       );
   }

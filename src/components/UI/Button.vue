@@ -1,11 +1,7 @@
 <script setup lang="ts">
-    let {buttonType,Text,Icon,Disabled,variant,handle } = defineProps({
+    let {buttonType,Icon,Disabled,variant,handle } = defineProps({
         buttonType:{
             type:String as () => 'button' | 'submit' | 'reset' | undefined, 
-            default:'button'
-        },
-        Text:{
-            type:String,
             default:'button'
         },
         Icon:{
@@ -29,8 +25,8 @@
 
 </script>
 <template>
-    <button v-if="variant=='primary'" :type="buttonType" :disabled="Disabled" class="btn" v-on:click="handle($event)">{{ Text }}</button>
-    <button v-else class="btn default" :type="buttonType" :disabled="Disabled" v-on:click="handle($event)">{{ Text }}</button>
+    <button v-if="variant=='primary'" :disabled="Disabled" class="btn" v-on:click="handle($event)"><slot></slot></button>
+    <button v-else class="btn default" :disabled="Disabled" v-on:click="handle($event)"><slot></slot></button>
 </template>
 <style lang="css" scoped>
     .btn{
