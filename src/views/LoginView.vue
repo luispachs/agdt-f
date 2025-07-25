@@ -32,7 +32,7 @@ import LoginForm from '@/components/UI/LoginForm.vue';
     }
   section.login-right{
       width: 20%;
-      height: 100%;
+      height: 80%;
       display: flex;
       flex-direction:row;
       justify-content: center;

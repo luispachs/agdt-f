@@ -17,7 +17,7 @@ let hidden = ref(true);
 function submitHandle(event:Event){
       let data = FormParse.parseToObject(event.target as HTMLFormElement);
       let validation = LoginFormValidator.safeParse(data);
-
+      hidden.value = true;
       if(!validation.success){
            errors.value = validation.error.errors.map(elem=>elem.message);
            return;
@@ -31,10 +31,15 @@ function submitHandle(event:Event){
                 localStorage.setItem(import.meta.env.VITE_SESSION_TOKEN,json.token)
                 await router.push(`/dashboard`);
                 return;
-              }
-              errors.value = [json.data]
+              }else{}
+              errors.value = [json.data];
+              hidden.value = false;
           }
-      );
+      ).catch(e=>{
+        errors.value =[e.message]
+        hidden.value = false;
+
+      });
   }
 </script>
 <template>
